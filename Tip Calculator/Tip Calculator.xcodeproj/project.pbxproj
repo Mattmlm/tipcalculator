@@ -14,6 +14,7 @@
 		8463049B1B7D3F060061C0E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8463049A1B7D3F060061C0E2 /* Images.xcassets */; };
 		8463049E1B7D3F060061C0E2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8463049C1B7D3F060061C0E2 /* LaunchScreen.xib */; };
 		846304AA1B7D3F060061C0E2 /* Tip_CalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 846304A91B7D3F060061C0E2 /* Tip_CalculatorTests.m */; };
+		84CDAA3C1B7D613100A568DA /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CDAA3B1B7D613100A568DA /* SettingsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		846304A31B7D3F060061C0E2 /* Tip CalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tip CalculatorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		846304A81B7D3F060061C0E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		846304A91B7D3F060061C0E2 /* Tip_CalculatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tip_CalculatorTests.m; sourceTree = "<group>"; };
+		84CDAA3A1B7D613100A568DA /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		84CDAA3B1B7D613100A568DA /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,8 @@
 				8463049A1B7D3F060061C0E2 /* Images.xcassets */,
 				8463049C1B7D3F060061C0E2 /* LaunchScreen.xib */,
 				8463048D1B7D3F060061C0E2 /* Supporting Files */,
+				84CDAA3A1B7D613100A568DA /* SettingsViewController.h */,
+				84CDAA3B1B7D613100A568DA /* SettingsViewController.m */,
 			);
 			path = "Tip Calculator";
 			sourceTree = "<group>";
@@ -222,6 +227,7 @@
 				846304961B7D3F060061C0E2 /* ViewController.m in Sources */,
 				846304931B7D3F060061C0E2 /* AppDelegate.m in Sources */,
 				846304901B7D3F060061C0E2 /* main.m in Sources */,
+				84CDAA3C1B7D613100A568DA /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
