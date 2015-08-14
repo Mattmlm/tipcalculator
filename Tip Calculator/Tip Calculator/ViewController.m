@@ -7,21 +7,108 @@
 //
 
 #import "ViewController.h"
+#import "Constants.h"
+#import "TipCalculatedCollectionViewCell.h"
 
 @interface ViewController ()
+
+@property (nonatomic, weak) IBOutlet UITextField * billTotalField;
+@property (nonatomic, weak) IBOutlet UIButton * clearButton;
+@property (nonatomic, weak) IBOutlet UIButton * settingsButton;
+@property (nonatomic, weak) IBOutlet UICollectionView * tipCalculatedCollectionView;
 
 @end
 
 @implementation ViewController
 
+#pragma mark - UIViewController cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.billTotalField.delegate = self;
+    self.tipCalculatedCollectionView.delegate = self;
+    self.tipCalculatedCollectionView.dataSource = self;
+    UINib *tipCellNib = [UINib nibWithNibName:@"TipCalculatedCollectionViewCell" bundle:nil];
+    [self.tipCalculatedCollectionView registerNib:tipCellNib forCellWithReuseIdentifier:@"cell"];
+    
+    [self.navigationController setNavigationBarHidden:YES];
+
+    // Make keyboard show
+    [self.billTotalField becomeFirstResponder];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UITextFieldDelegate protocol methods
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ([textField.text containsString:@"."]) {
+        
+    }
+    if ([string isEqualToString:@"."] && [textField.text containsString:@"."]) {
+        return NO;
+    } else {
+        [self updateTipCalculations:[textField.text stringByReplacingCharactersInRange:range withString:string]];
+        return YES;
+    }
+}
+
+#pragma mark - UICollectionViewDelegate protocol methods
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 100;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    TipCalculatedCollectionViewCell * tipCell = nil;
+    if ([cell isKindOfClass:[TipCalculatedCollectionViewCell class]]) {
+        tipCell = (TipCalculatedCollectionViewCell *) cell;
+    }
+    if(tipCell) {
+        tipCell.tipPercentage = [NSNumber numberWithInteger:indexPath.row];
+        [tipCell updateCell:[self.billTotalField.text doubleValue]];
+    }
+    cell.backgroundColor = [self randomColor];
+    return cell;
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout protocol methods
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(115.0, self.tipCalculatedCollectionView.frame.size.height);
+}
+
+#pragma mark - Helpers
+
+- (void) updateTipCalculations:(NSString *)newBillValue {
+    NSArray * cellsToUpdate = [self.tipCalculatedCollectionView visibleCells];
+    for (UICollectionViewCell * cell in cellsToUpdate) {
+        if ([cell isKindOfClass:[TipCalculatedCollectionViewCell class]]) {
+            TipCalculatedCollectionViewCell * tipCell = (TipCalculatedCollectionViewCell *)cell;
+            [tipCell updateCell:[newBillValue doubleValue]];
+        }
+    }
+}
+
+- (UIColor *)randomColor {
+    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
 }
 
 @end
