@@ -30,7 +30,7 @@
     self.tipCalculatedCollectionView.delegate = self;
     self.tipCalculatedCollectionView.dataSource = self;
     UINib *tipCellNib = [UINib nibWithNibName:@"TipCalculatedCollectionViewCell" bundle:nil];
-    [self.tipCalculatedCollectionView registerNib:tipCellNib forCellWithReuseIdentifier:@"cell"];
+    [self.tipCalculatedCollectionView registerNib:tipCellNib forCellWithReuseIdentifier:@"tipCell"];
     
     [self.navigationController setNavigationBarHidden:YES];
 
@@ -39,6 +39,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
@@ -73,7 +74,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"tipCell" forIndexPath:indexPath];
     TipCalculatedCollectionViewCell * tipCell = nil;
     if ([cell isKindOfClass:[TipCalculatedCollectionViewCell class]]) {
         tipCell = (TipCalculatedCollectionViewCell *) cell;
