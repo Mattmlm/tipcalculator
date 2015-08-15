@@ -89,7 +89,7 @@
 #pragma mark - UICollectionViewDelegateFlowLayout protocol methods
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(115.0, self.tipCalculatedCollectionView.frame.size.height);
+    return CGSizeMake([UIScreen mainScreen].bounds.size.width / 3.5, self.tipCalculatedCollectionView.frame.size.height);
 }
 
 #pragma mark - Helpers
