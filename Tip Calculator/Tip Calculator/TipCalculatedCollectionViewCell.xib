@@ -13,49 +13,50 @@
                 <rect key="frame" x="0.0" y="0.0" width="152" height="100"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8at-GG-pOe" userLabel="Currency Total Label">
-                        <rect key="frame" x="52" y="16" width="13.5" height="28"/>
+                        <rect key="frame" x="57" y="21" width="13.5" height="28"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oap-Hv-5ye" userLabel="Total Calculated Value Label">
-                        <rect key="frame" x="67" y="11" width="18" height="37.5"/>
+                        <rect key="frame" x="72" y="16" width="18" height="37.5"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="32"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+ $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYf-sO-KUi" userLabel="Currency Tip Label">
-                        <rect key="frame" x="36" y="66" width="25" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="41.5" y="66" width="21" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0," textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HB6-Xq-QLd" userLabel="Tip Calculated Value Label">
-                        <rect key="frame" x="63" y="64" width="17" height="23.5"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="64.5" y="64" width="14.5" height="20"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkC-0g-sl2" userLabel="Tip Percentage Label">
-                        <rect key="frame" x="81" y="67" width="25" height="19"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="84" y="67" width="20.5" height="15.5"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <color key="backgroundColor" red="0.3803921569" green="0.7843137255" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="Oap-Hv-5ye" secondAttribute="centerX" id="0kb-Lb-p7B"/>
-                <constraint firstItem="Oap-Hv-5ye" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="11" id="DQe-tb-P8v"/>
+                <constraint firstAttribute="centerX" secondItem="Oap-Hv-5ye" secondAttribute="centerX" constant="-5" id="0kb-Lb-p7B"/>
+                <constraint firstItem="Oap-Hv-5ye" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="DQe-tb-P8v"/>
                 <constraint firstItem="zkC-0g-sl2" firstAttribute="centerY" secondItem="HB6-Xq-QLd" secondAttribute="centerY" constant="0.75" id="Gbj-du-0ho"/>
                 <constraint firstItem="Oap-Hv-5ye" firstAttribute="leading" secondItem="8at-GG-pOe" secondAttribute="trailing" constant="1" id="Mra-AK-nZl"/>
                 <constraint firstItem="HB6-Xq-QLd" firstAttribute="leading" secondItem="hYf-sO-KUi" secondAttribute="trailing" constant="2" id="PdB-AE-m0o"/>
                 <constraint firstItem="8at-GG-pOe" firstAttribute="centerY" secondItem="Oap-Hv-5ye" secondAttribute="centerY" id="Pre-u1-zbF"/>
-                <constraint firstItem="zkC-0g-sl2" firstAttribute="leading" secondItem="HB6-Xq-QLd" secondAttribute="trailing" constant="1" id="ZkV-6u-JCu"/>
+                <constraint firstItem="zkC-0g-sl2" firstAttribute="leading" secondItem="HB6-Xq-QLd" secondAttribute="trailing" constant="5" id="ZkV-6u-JCu"/>
                 <constraint firstAttribute="centerX" secondItem="HB6-Xq-QLd" secondAttribute="centerX" constant="4.5" id="bFE-UZ-y3I"/>
                 <constraint firstItem="hYf-sO-KUi" firstAttribute="centerY" secondItem="HB6-Xq-QLd" secondAttribute="centerY" constant="0.5" id="jmu-2M-L4P"/>
-                <constraint firstItem="HB6-Xq-QLd" firstAttribute="top" secondItem="Oap-Hv-5ye" secondAttribute="bottom" constant="15.5" id="mm6-Do-ahg"/>
+                <constraint firstItem="HB6-Xq-QLd" firstAttribute="top" secondItem="Oap-Hv-5ye" secondAttribute="bottom" constant="10.5" id="mm6-Do-ahg"/>
             </constraints>
             <size key="customSize" width="152" height="115.5"/>
             <connections>
