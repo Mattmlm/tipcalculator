@@ -99,6 +99,13 @@
     return CGSizeMake([UIScreen mainScreen].bounds.size.width / 3.5, self.tipCalculatedCollectionView.frame.size.height);
 }
 
+#pragma mark - IBAction
+
+- (IBAction)clearButtonPressed:(id)sender {
+    [self.billTotalField setText:@""];
+    [self updateTipCalculations:@""];
+}
+
 #pragma mark - Helpers
 
 - (void) recordLastTipPercentageSettings {
