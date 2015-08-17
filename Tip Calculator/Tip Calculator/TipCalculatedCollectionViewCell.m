@@ -35,11 +35,15 @@ static NSString * const reuseIdentifier = @"tipCell";
     // Initialization code
 }
 
+- (void)layoutSubviews {
+    
+}
+
 - (void)updateCell:(double)billTotal {
-    [self.currencyTipLabel setText:@"$"];
+    [self.currencyTipLabel setText:@"+ $"];
     [self.currencyTotalLabel setText:@"$"];
     [self.tipPercentageLabel setText:[NSString stringWithFormat:@"%@%%", self.tipPercentage]];
-    [self.tipCalculatedLabel setText:[NSString stringWithFormat:@"%0.02f", [self.tipPercentage doubleValue] * 0.01 * billTotal]];
+    [self.tipCalculatedLabel setText:[NSString stringWithFormat:@"%0.02f,", [self.tipPercentage doubleValue] * 0.01 * billTotal]];
     [self.totalCalculatedLabel setText:[NSString stringWithFormat:@"%0.02f", ([self.tipPercentage doubleValue] * 0.01 + 1) * billTotal]];
 }
 
