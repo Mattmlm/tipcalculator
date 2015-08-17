@@ -15,6 +15,6 @@
 + (NSString *)nibName;
 + (NSString *)reuseIdentifier;
 
-- (void)updateCell:(double)billTotal;
+- (void)updateCell:(double)billTotal withSplit:(int)numberOfPeople;
 
 @end

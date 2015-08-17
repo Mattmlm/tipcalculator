@@ -12,9 +12,11 @@
 
 @interface ViewController ()
 
+@property (nonatomic, weak) IBOutlet UIButton * settingsButton;
 @property (nonatomic, weak) IBOutlet UITextField * billTotalField;
 @property (nonatomic, weak) IBOutlet UIButton * clearButton;
-@property (nonatomic, weak) IBOutlet UIButton * settingsButton;
+@property (nonatomic, weak) IBOutlet UIButton * numberPeopleButton;
+@property (nonatomic, weak) IBOutlet UILabel * numberPeopleLabel;
 @property (nonatomic, weak) IBOutlet UICollectionView * tipCalculatedCollectionView;
 
 @property BOOL isDefaultLoaded;
@@ -65,7 +67,7 @@
     if ([string isEqualToString:@"."] && [textField.text containsString:@"."]) {
         return NO;
     } else {
-        [self updateTipCalculations:[textField.text stringByReplacingCharactersInRange:range withString:string]];
+        [self updateTipCalculations:[textField.text stringByReplacingCharactersInRange:range withString:string] withSplit:self.numberPeopleLabel.text];
         return YES;
     }
 }
@@ -89,7 +91,7 @@
     }
     if(tipCell) {
         tipCell.tipPercentage = [NSNumber numberWithInteger:indexPath.row];
-        [tipCell updateCell:[self.billTotalField.text doubleValue]];
+        [tipCell updateCell:[self.billTotalField.text doubleValue] withSplit:[self.numberPeopleLabel.text intValue]];
     }
     return cell;
 }
@@ -104,7 +106,14 @@
 
 - (IBAction)clearButtonPressed:(id)sender {
     [self.billTotalField setText:@""];
-    [self updateTipCalculations:@""];
+    [self.numberPeopleLabel setText:@"1"];
+    [self updateTipCalculations:@"" withSplit:@"1"];
+}
+
+- (IBAction)numberPeopleButtonPressed:(id)sender {
+    int numberOfPeople = [self.numberPeopleLabel.text intValue];
+    [self.numberPeopleLabel setText:[NSString stringWithFormat:@"%d", numberOfPeople + 1]];
+    [self updateTipCalculations:self.billTotalField.text withSplit:self.numberPeopleLabel.text];
 }
 
 #pragma mark - Helpers
@@ -129,12 +138,13 @@
     return nil;
 }
 
-- (void) updateTipCalculations:(NSString *)newBillValue {
+- (void) updateTipCalculations:(NSString *)newBillValue withSplit:(NSString *)numberOfPeople {
     NSArray * cellsToUpdate = [self.tipCalculatedCollectionView visibleCells];
+    int people = [numberOfPeople intValue];
     for (UICollectionViewCell * cell in cellsToUpdate) {
         if ([cell isKindOfClass:[TipCalculatedCollectionViewCell class]]) {
             TipCalculatedCollectionViewCell * tipCell = (TipCalculatedCollectionViewCell *)cell;
-            [tipCell updateCell:[newBillValue doubleValue]];
+            [tipCell updateCell:[newBillValue doubleValue] withSplit:people];
         }
     }
 }

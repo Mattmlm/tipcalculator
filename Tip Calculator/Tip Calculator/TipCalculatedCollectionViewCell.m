@@ -39,12 +39,14 @@ static NSString * const reuseIdentifier = @"tipCell";
     
 }
 
-- (void)updateCell:(double)billTotal {
+- (void)updateCell:(double)billTotal withSplit:(int)numberOfPeople {
+    double tipCalculated = [self.tipPercentage doubleValue] * 0.01 * billTotal / numberOfPeople;
+    double totalCalculated = ([self.tipPercentage doubleValue] * 0.01 + 1) * billTotal / numberOfPeople;
     [self.currencyTipLabel setText:@"+ $"];
     [self.currencyTotalLabel setText:@"$"];
     [self.tipPercentageLabel setText:[NSString stringWithFormat:@"%@%%", self.tipPercentage]];
-    [self.tipCalculatedLabel setText:[NSString stringWithFormat:@"%0.02f,", [self.tipPercentage doubleValue] * 0.01 * billTotal]];
-    [self.totalCalculatedLabel setText:[NSString stringWithFormat:@"%0.02f", ([self.tipPercentage doubleValue] * 0.01 + 1) * billTotal]];
+    [self.tipCalculatedLabel setText:[NSString stringWithFormat:@"%0.02f,", tipCalculated]];
+    [self.totalCalculatedLabel setText:[NSString stringWithFormat:@"%0.02f", totalCalculated]];
 }
 
 @end
