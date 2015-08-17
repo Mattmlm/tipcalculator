@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
+#import "Constants.h"
 
 @interface AppDelegate ()
 
@@ -23,11 +25,13 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [self recordStateBeforeTermination];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [self recordStateBeforeTermination];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -40,6 +44,22 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [self recordStateBeforeTermination];
+}
+
+#pragma mark - Helpers
+- (void)recordStateBeforeTermination {
+    // Record the time when app is closed
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kLastCloseDate];
+    
+    // Record the tip settings when app is closed
+    if([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
+        UIViewController * controller = [(UINavigationController*)self.window.rootViewController visibleViewController];
+        if([controller isKindOfClass:[ViewController class]]) {
+            ViewController * tipController = (ViewController *)controller;
+            [tipController recordLastTipPercentageSettings];
+        }
+    }
 }
 
 @end

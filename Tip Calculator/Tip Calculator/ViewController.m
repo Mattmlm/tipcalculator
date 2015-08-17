@@ -17,6 +17,8 @@
 @property (nonatomic, weak) IBOutlet UIButton * settingsButton;
 @property (nonatomic, weak) IBOutlet UICollectionView * tipCalculatedCollectionView;
 
+@property BOOL isDefaultLoaded;
+
 @end
 
 @implementation ViewController
@@ -41,6 +43,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self loadDefaultTip];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,6 +101,26 @@
 
 #pragma mark - Helpers
 
+- (void) recordLastTipPercentageSettings {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.billTotalField.text forKey:kLastBillTotal];
+    
+    [defaults setObject:[NSNumber numberWithInteger:[self centerTipPercentageIndexPath].row] forKey:kLastTipPercentage];
+}
+
+- (NSIndexPath *) centerTipPercentageIndexPath {
+    NSArray * visibleCells = [self.tipCalculatedCollectionView visibleCells];
+    CGFloat centerX = self.tipCalculatedCollectionView.contentOffset.x + [UIScreen mainScreen].bounds.size.width/2;
+    CGRect centerRect = CGRectMake(centerX, self.tipCalculatedCollectionView.frame.size.height / 2, 1, 1);
+    for (UICollectionViewCell * cell in visibleCells) {
+        BOOL isCellCenter = CGRectIntersectsRect(centerRect, cell.frame);
+        if (isCellCenter) {
+            return [self.tipCalculatedCollectionView indexPathForCell:cell];
+        }
+    }
+    return nil;
+}
+
 - (void) updateTipCalculations:(NSString *)newBillValue {
     NSArray * cellsToUpdate = [self.tipCalculatedCollectionView visibleCells];
     for (UICollectionViewCell * cell in cellsToUpdate) {
@@ -101,6 +128,26 @@
             TipCalculatedCollectionViewCell * tipCell = (TipCalculatedCollectionViewCell *)cell;
             [tipCell updateCell:[newBillValue doubleValue]];
         }
+    }
+}
+
+- (void) loadDefaultTip {
+    if (!self.isDefaultLoaded) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSDate * lastDate = (NSDate *)[defaults objectForKey:kLastCloseDate];
+        NSTimeInterval timeDiff = [[NSDate date] timeIntervalSinceDate:lastDate];
+        
+        NSIndexPath * tipPercentageToScrollToIndexPath = nil;
+        if (timeDiff > 600) {
+            tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:[defaults integerForKey:kTipDefaultPercentage] inSection:0];
+            [self.tipCalculatedCollectionView scrollToItemAtIndexPath:tipPercentageToScrollToIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+        } else {
+            tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:[defaults integerForKey:kLastTipPercentage] inSection:0];
+            [self.tipCalculatedCollectionView scrollToItemAtIndexPath:tipPercentageToScrollToIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+            [self.billTotalField setText:[defaults objectForKey:kLastBillTotal]];
+        }
+        self.isDefaultLoaded = YES;
     }
 }
 

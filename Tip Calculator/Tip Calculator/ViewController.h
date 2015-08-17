@@ -10,6 +10,7 @@
 
 @interface ViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate>
 
+- (void) recordLastTipPercentageSettings;
 
 @end
 
