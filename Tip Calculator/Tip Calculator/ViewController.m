@@ -31,8 +31,8 @@
     self.billTotalField.delegate = self;
     self.tipCalculatedCollectionView.delegate = self;
     self.tipCalculatedCollectionView.dataSource = self;
-    UINib *tipCellNib = [UINib nibWithNibName:@"TipCalculatedCollectionViewCell" bundle:nil];
-    [self.tipCalculatedCollectionView registerNib:tipCellNib forCellWithReuseIdentifier:@"tipCell"];
+    UINib *tipCellNib = [UINib nibWithNibName:[TipCalculatedCollectionViewCell nibName] bundle:nil];
+    [self.tipCalculatedCollectionView registerNib:tipCellNib forCellWithReuseIdentifier:[TipCalculatedCollectionViewCell reuseIdentifier]];
     
     [self.navigationController setNavigationBarHidden:YES];
 
@@ -69,7 +69,7 @@
     }
 }
 
-#pragma mark - UICollectionViewDelegate protocol methods
+#pragma mark - UICollectionViewDataSource protocol methods
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -81,7 +81,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"tipCell" forIndexPath:indexPath];
+    UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:[TipCalculatedCollectionViewCell reuseIdentifier] forIndexPath:indexPath];
     TipCalculatedCollectionViewCell * tipCell = nil;
     if ([cell isKindOfClass:[TipCalculatedCollectionViewCell class]]) {
         tipCell = (TipCalculatedCollectionViewCell *) cell;

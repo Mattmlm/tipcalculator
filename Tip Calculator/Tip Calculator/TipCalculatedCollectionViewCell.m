@@ -20,6 +20,17 @@
 
 @implementation TipCalculatedCollectionViewCell
 
+static NSString * const nibName = @"TipCalculatedCollectionViewCell";
+static NSString * const reuseIdentifier = @"tipCell";
+
++ (NSString *)nibName {
+    return nibName;
+}
+
++ (NSString *)reuseIdentifier {
+    return reuseIdentifier;
+}
+
 - (void)awakeFromNib {
     // Initialization code
 }

@@ -12,6 +12,9 @@
 
 @property (nonatomic, strong) NSNumber * tipPercentage;
 
++ (NSString *)nibName;
++ (NSString *)reuseIdentifier;
+
 - (void)updateCell:(double)billTotal;
 
 @end
