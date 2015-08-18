@@ -145,6 +145,7 @@
     [defaults setInteger:[self centerTipPercentageIndexPath].row forKey:kLastTipPercentage];
     
     [defaults setObject:self.numberPeopleLabel.text forKey:kLastBillSplitNumber];
+    [defaults synchronize];
 }
 
 - (NSIndexPath *) centerTipPercentageIndexPath {

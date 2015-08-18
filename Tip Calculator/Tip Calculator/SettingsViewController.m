@@ -73,6 +73,7 @@
         }
         [defaults setObject:newDefaultBillSplitNumberText forKey:kBillSplitNumberDefault];
     }
+    [defaults synchronize];
 }
 
 #pragma mark - Gesture Handlers
