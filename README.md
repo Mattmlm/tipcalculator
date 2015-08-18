@@ -15,6 +15,6 @@ Completed:
 * [x] Additional: User can choose a tip percentage between 0 and 100
 
 Video Walkthrough of user entering a bill amount, choosing a tip percentage, splitting the bill, closing the app, and remembering previous data. User can also clear.
-(Calculating Tip1.gif)
+(Calculating Tip.gif)
 
 Note: to embed the gif file, just check your gif file into your repo and update the name of the file above.
