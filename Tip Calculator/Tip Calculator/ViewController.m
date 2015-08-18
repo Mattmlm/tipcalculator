@@ -174,19 +174,38 @@
         
         // Set up default tip percentage
         NSIndexPath * tipPercentageToScrollToIndexPath = nil;
+
+        NSInteger lastTipPercentage = [defaults integerForKey:kLastTipPercentage];
+        NSString * lastBillTotal = [defaults objectForKey:kLastBillTotal];
+        NSString * lastBillSplitNumber = [defaults stringForKey:kLastBillSplitNumber];
         
-        if (timeDiff > 600) {
-            // If more than 10 minutes have passed, use 15% or whatever value is in settings
-            NSInteger tipPercentage = [defaults integerForKey:kTipDefaultPercentage];
+        if (timeDiff < 600 && lastTipPercentage && lastBillTotal && lastBillSplitNumber) {
+            // If less than 10 minutes have passed and something has been recorded, set bill total, number of people to split by, and tip percentage to what was last present
+            tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:lastTipPercentage inSection:0];
+            [self.billTotalField setText:lastBillTotal];
+            [self.numberPeopleLabel setText:lastBillSplitNumber];
+        } else {
+            // If more than 10 minutes have passed, reset, and start with defaults
+            
+            // Clear last recorded numbers
+            [defaults removeObjectForKey:kLastBillTotal];
+            [defaults removeObjectForKey:kLastTipPercentage];
+            [defaults removeObjectForKey:kLastBillSplitNumber];
+            
+            // Load default percentage from settings
+            NSInteger tipPercentage = [defaults integerForKey:kTipPercentageDefault];
+            // Default is 15 if it hasn't already been set
             if (tipPercentage == 0) {
                 tipPercentage = 15;
             }
             tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:tipPercentage inSection:0];
-        } else {
-            // If less than 10 minutes have passed, set bill total, number of people to split by, and tip percentage to what was last present
-            tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:[defaults integerForKey:kLastTipPercentage] inSection:0];
-            [self.billTotalField setText:[defaults objectForKey:kLastBillTotal]];
-            [self.numberPeopleLabel setText:[defaults stringForKey:kLastBillSplitNumber]];
+            
+            // Load default number of people to split bill by
+            NSString * billSplitNumberDefault = [defaults stringForKey:kBillSplitNumberDefault];
+            if (!billSplitNumberDefault) {
+                billSplitNumberDefault = @"1";
+            }
+            [self.numberPeopleLabel setText:billSplitNumberDefault];
         }
         [self.tipCalculatedCollectionView scrollToItemAtIndexPath:tipPercentageToScrollToIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
         

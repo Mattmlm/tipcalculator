@@ -343,16 +343,45 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lk-rM-3MT" userLabel="Percentage Symbol Label">
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lk-rM-3MT" userLabel="Percentage Symbol Label">
                                         <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28.5" id="fOR-s5-egv"/>
+                                            <constraint firstAttribute="width" constant="32" id="ghn-hF-NsL"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="fOR-s5-egv"/>
+                                                <exclude reference="ghn-hF-NsL"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="fOR-s5-egv"/>
+                                                <include reference="ghn-hF-NsL"/>
+                                            </mask>
+                                        </variation>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pI1-CV-gUL" userLabel="Default Number of People Field">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pI1-CV-gUL" userLabel="Default Number of People Field">
                                         <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="51" id="nD5-ur-rCY"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="nD5-ur-rCY"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="nD5-ur-rCY"/>
+                                            </mask>
+                                        </variation>
                                     </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blackDude" translatesAutoresizingMaskIntoConstraints="NO" id="BiO-uK-y47" userLabel="Default Number People Icon Image">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -376,7 +405,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="5lk-rM-3MT" firstAttribute="leading" secondItem="MKm-dk-cna" secondAttribute="trailing" constant="1" id="3cC-Ja-Yok"/>
+                                    <constraint firstItem="5lk-rM-3MT" firstAttribute="leading" secondItem="MKm-dk-cna" secondAttribute="trailing" constant="1" id="3cC-Ja-Yok">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="2"/>
+                                    </constraint>
                                     <constraint firstItem="lYk-Xs-QoK" firstAttribute="leading" secondItem="yaY-X4-eEO" secondAttribute="leading" constant="28" id="6AE-1f-Jnu"/>
                                     <constraint firstItem="BiO-uK-y47" firstAttribute="leading" secondItem="Qxo-ft-1AK" secondAttribute="trailing" constant="3" id="7mM-Ds-yXm"/>
                                     <constraint firstItem="pI1-CV-gUL" firstAttribute="centerY" secondItem="Qxo-ft-1AK" secondAttribute="centerY" constant="0.5" id="9jL-SH-oEa"/>
@@ -479,6 +510,11 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="numberOfPeopleField" destination="pI1-CV-gUL" id="4EG-Gg-J8n"/>
+                        <outlet property="percentageField" destination="MKm-dk-cna" id="jbK-jc-raR"/>
+                        <outlet property="percentageSymbolLabel" destination="5lk-rM-3MT" id="gLt-NA-mSl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYv-9U-6zt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

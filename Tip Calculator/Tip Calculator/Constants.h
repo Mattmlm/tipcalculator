@@ -24,12 +24,13 @@
  */
 
 // Default settings
-#define kTipDefaultPercentage @"tipPercentageDefault"
+#define kTipPercentageDefault   @"tipPercentageDefault"
+#define kBillSplitNumberDefault @"billSplitNumberDefault"
 
 // Record Settings when app is killed
-#define kLastCloseDate @"lastCloseDate"
-#define kLastBillTotal @"lastBillTotal"
-#define kLastTipPercentage @"lastTipPercentage"
-#define kLastBillSplitNumber @"lastBillSplitNumber"
+#define kLastCloseDate          @"lastCloseDate"
+#define kLastBillTotal          @"lastBillTotal"
+#define kLastTipPercentage      @"lastTipPercentage"
+#define kLastBillSplitNumber    @"lastBillSplitNumber"
 
 #endif
