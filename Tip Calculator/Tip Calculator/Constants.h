@@ -13,7 +13,7 @@
  *Colors
  */
 
-#define kMainColorGreen 0x73F6C7
+#define kMainColorGreen 0x6FECBF
 #define kBackgroundColorGreen2 0x61C882
 
 // HELPER METHODS
