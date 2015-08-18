@@ -15,7 +15,7 @@
 @property (nonatomic, weak) IBOutlet UIButton * settingsButton;
 @property (nonatomic, weak) IBOutlet UITextField * billTotalField;
 @property (nonatomic, weak) IBOutlet UIButton * clearButton;
-@property (nonatomic, weak) IBOutlet UIButton * numberPeopleButton;
+@property (nonatomic, weak) IBOutlet UIView * numberPeopleView;
 @property (nonatomic, weak) IBOutlet UILabel * numberPeopleLabel;
 @property (nonatomic, weak) IBOutlet UICollectionView * tipCalculatedCollectionView;
 
@@ -37,7 +37,15 @@
     [self.tipCalculatedCollectionView registerNib:tipCellNib forCellWithReuseIdentifier:[TipCalculatedCollectionViewCell reuseIdentifier]];
     
     [self.navigationController setNavigationBarHidden:YES];
-
+    
+    UISwipeGestureRecognizer * swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
+    UISwipeGestureRecognizer * swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
+    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    
+    [self.numberPeopleView addGestureRecognizer:swipeUp];
+    [self.numberPeopleView addGestureRecognizer:swipeDown];
+    
     // Make keyboard show
     [self.billTotalField becomeFirstResponder];
 }
@@ -110,9 +118,15 @@
     [self updateTipCalculations:@"" withSplit:@"1"];
 }
 
-- (IBAction)numberPeopleButtonPressed:(id)sender {
+- (void)handleSwipeNumberPeople:(UISwipeGestureRecognizer *)swipe {
     int numberOfPeople = [self.numberPeopleLabel.text intValue];
-    [self.numberPeopleLabel setText:[NSString stringWithFormat:@"%d", numberOfPeople + 1]];
+    if (swipe.direction == UISwipeGestureRecognizerDirectionUp) {
+        [self.numberPeopleLabel setText:[NSString stringWithFormat:@"%d", numberOfPeople + 1]];
+    } else if (swipe.direction == UISwipeGestureRecognizerDirectionDown) {
+        if (numberOfPeople > 1) {
+            [self.numberPeopleLabel setText:[NSString stringWithFormat:@"%d", numberOfPeople - 1]];
+        }
+    }
     [self updateTipCalculations:self.billTotalField.text withSplit:self.numberPeopleLabel.text];
 }
 
