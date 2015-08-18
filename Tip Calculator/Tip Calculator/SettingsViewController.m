@@ -7,6 +7,7 @@
 //
 
 #import "SettingsViewController.h"
+#import "Constants.h"
 
 @interface SettingsViewController ()
 
@@ -16,9 +17,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController.navigationBar setBarTintColor:UIColorFromRGB(kMainColorGreen)];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 }
 
 - (void)didReceiveMemoryWarning {
