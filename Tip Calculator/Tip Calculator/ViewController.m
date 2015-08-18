@@ -39,12 +39,18 @@
     [self.navigationController setNavigationBarHidden:YES];
     
     UISwipeGestureRecognizer * swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
+    UISwipeGestureRecognizer * swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
     UISwipeGestureRecognizer * swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
+    UISwipeGestureRecognizer * swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
     [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
     [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
     
     [self.numberPeopleView addGestureRecognizer:swipeRight];
+    [self.numberPeopleView addGestureRecognizer:swipeUp];
     [self.numberPeopleView addGestureRecognizer:swipeLeft];
+    [self.numberPeopleView addGestureRecognizer:swipeDown];
     
     // Make keyboard show
     [self.billTotalField becomeFirstResponder];
@@ -120,9 +126,9 @@
 
 - (void)handleSwipeNumberPeople:(UISwipeGestureRecognizer *)swipe {
     int numberOfPeople = [self.numberPeopleLabel.text intValue];
-    if (swipe.direction == UISwipeGestureRecognizerDirectionRight) {
+    if (swipe.direction == UISwipeGestureRecognizerDirectionRight || swipe.direction == UISwipeGestureRecognizerDirectionUp) {
         [self.numberPeopleLabel setText:[NSString stringWithFormat:@"%d", numberOfPeople + 1]];
-    } else if (swipe.direction == UISwipeGestureRecognizerDirectionLeft) {
+    } else if (swipe.direction == UISwipeGestureRecognizerDirectionLeft || swipe.direction == UISwipeGestureRecognizerDirectionDown) {
         if (numberOfPeople > 1) {
             [self.numberPeopleLabel setText:[NSString stringWithFormat:@"%d", numberOfPeople - 1]];
         }
