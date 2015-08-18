@@ -216,6 +216,7 @@
             billSplitNumberDefault = @"1";
         }
         [self.numberPeopleLabel setText:billSplitNumberDefault];
+        [self updateTipCalculations:self.billTotalField.text withSplit:billSplitNumberDefault];
     }
 }
 
