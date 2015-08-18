@@ -198,6 +198,7 @@
             [defaults removeObjectForKey:kLastBillTotal];
             [defaults removeObjectForKey:kLastTipPercentage];
             [defaults removeObjectForKey:kLastBillSplitNumber];
+            [defaults synchronize];
             
             // Load default percentage from settings
             NSInteger tipPercentage = [defaults integerForKey:kTipPercentageDefault];
