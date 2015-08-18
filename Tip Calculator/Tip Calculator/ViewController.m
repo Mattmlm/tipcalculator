@@ -38,13 +38,13 @@
     
     [self.navigationController setNavigationBarHidden:YES];
     
-    UISwipeGestureRecognizer * swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
-    UISwipeGestureRecognizer * swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
-    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
-    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    UISwipeGestureRecognizer * swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
+    UISwipeGestureRecognizer * swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeNumberPeople:)];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
     
-    [self.numberPeopleView addGestureRecognizer:swipeUp];
-    [self.numberPeopleView addGestureRecognizer:swipeDown];
+    [self.numberPeopleView addGestureRecognizer:swipeRight];
+    [self.numberPeopleView addGestureRecognizer:swipeLeft];
     
     // Make keyboard show
     [self.billTotalField becomeFirstResponder];
@@ -120,9 +120,9 @@
 
 - (void)handleSwipeNumberPeople:(UISwipeGestureRecognizer *)swipe {
     int numberOfPeople = [self.numberPeopleLabel.text intValue];
-    if (swipe.direction == UISwipeGestureRecognizerDirectionUp) {
+    if (swipe.direction == UISwipeGestureRecognizerDirectionRight) {
         [self.numberPeopleLabel setText:[NSString stringWithFormat:@"%d", numberOfPeople + 1]];
-    } else if (swipe.direction == UISwipeGestureRecognizerDirectionDown) {
+    } else if (swipe.direction == UISwipeGestureRecognizerDirectionLeft) {
         if (numberOfPeople > 1) {
             [self.numberPeopleLabel setText:[NSString stringWithFormat:@"%d", numberOfPeople - 1]];
         }
