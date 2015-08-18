@@ -93,6 +93,9 @@
 - (void)loadDefaultValues {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSInteger defaultPercentage = [defaults integerForKey:kTipPercentageDefault];
+    if(defaultPercentage == 0) {
+        defaultPercentage = 15;
+    }
     NSString * billSplitNumberDefault = [defaults stringForKey:kBillSplitNumberDefault];
     if (!billSplitNumberDefault) {
         billSplitNumberDefault = @"1";
