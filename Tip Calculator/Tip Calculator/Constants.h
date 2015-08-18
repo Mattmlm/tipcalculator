@@ -20,5 +20,6 @@
 #define kLastCloseDate @"lastCloseDate"
 #define kLastBillTotal @"lastBillTotal"
 #define kLastTipPercentage @"lastTipPercentage"
+#define kLastBillSplitNumber @"lastBillSplitNumber"
 
 #endif

@@ -136,7 +136,9 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:self.billTotalField.text forKey:kLastBillTotal];
     
-    [defaults setObject:[NSNumber numberWithInteger:[self centerTipPercentageIndexPath].row] forKey:kLastTipPercentage];
+    [defaults setInteger:[self centerTipPercentageIndexPath].row forKey:kLastTipPercentage];
+    
+    [defaults setObject:self.numberPeopleLabel.text forKey:kLastBillSplitNumber];
 }
 
 - (NSIndexPath *) centerTipPercentageIndexPath {
@@ -170,15 +172,24 @@
         NSDate * lastDate = (NSDate *)[defaults objectForKey:kLastCloseDate];
         NSTimeInterval timeDiff = [[NSDate date] timeIntervalSinceDate:lastDate];
         
+        // Set up default tip percentage
         NSIndexPath * tipPercentageToScrollToIndexPath = nil;
+        
         if (timeDiff > 600) {
-            tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:[defaults integerForKey:kTipDefaultPercentage] inSection:0];
-            [self.tipCalculatedCollectionView scrollToItemAtIndexPath:tipPercentageToScrollToIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+            // If more than 10 minutes have passed, use 15% or whatever value is in settings
+            NSInteger tipPercentage = [defaults integerForKey:kTipDefaultPercentage];
+            if (tipPercentage == 0) {
+                tipPercentage = 15;
+            }
+            tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:tipPercentage inSection:0];
         } else {
+            // If less than 10 minutes have passed, set bill total, number of people to split by, and tip percentage to what was last present
             tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:[defaults integerForKey:kLastTipPercentage] inSection:0];
-            [self.tipCalculatedCollectionView scrollToItemAtIndexPath:tipPercentageToScrollToIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
             [self.billTotalField setText:[defaults objectForKey:kLastBillTotal]];
+            [self.numberPeopleLabel setText:[defaults stringForKey:kLastBillSplitNumber]];
         }
+        [self.tipCalculatedCollectionView scrollToItemAtIndexPath:tipPercentageToScrollToIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+        
         self.isDefaultLoaded = YES;
     }
 }
