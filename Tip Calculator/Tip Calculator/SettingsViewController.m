@@ -51,10 +51,11 @@
 
 #pragma mark - UITextFieldDelegate protocol methods
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString * newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     if ([textField isEqual:self.percentageField]) {
-        NSInteger newDefaultPercentage = [self.percentageField.text integerValue];
+        NSInteger newDefaultPercentage = [newText integerValue];
         
         // Tip percentage should be within 0 and 100
         if (newDefaultPercentage > 100) {
@@ -62,9 +63,9 @@
         } else if (newDefaultPercentage < 0) {
             newDefaultPercentage = 0;
         }
-        [defaults setInteger:newDefaultPercentage forKey:kTipPercentageDefault];
+        [defaults setObject:[NSNumber numberWithInteger:newDefaultPercentage] forKey:kTipPercentageDefault];
     } else if ([textField isEqual:self.numberOfPeopleField]) {
-        NSString * newDefaultBillSplitNumberText = self.numberOfPeopleField.text;
+        NSString * newDefaultBillSplitNumberText = newText;
         NSInteger newDefaultBillSplitNumber = [newDefaultBillSplitNumberText integerValue];
         
         // Number of people to split the bill by should never be less than 1
@@ -74,6 +75,7 @@
         [defaults setObject:newDefaultBillSplitNumberText forKey:kBillSplitNumberDefault];
     }
     [defaults synchronize];
+    return YES;
 }
 
 #pragma mark - Gesture Handlers
@@ -92,15 +94,15 @@
 
 - (void)loadDefaultValues {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSInteger defaultPercentage = [defaults integerForKey:kTipPercentageDefault];
-    if(defaultPercentage == 0) {
-        defaultPercentage = 15;
+    NSNumber * defaultPercentage = [defaults objectForKey:kTipPercentageDefault];
+    if(defaultPercentage == nil) {
+        defaultPercentage = @15;
     }
     NSString * billSplitNumberDefault = [defaults stringForKey:kBillSplitNumberDefault];
     if (!billSplitNumberDefault) {
         billSplitNumberDefault = @"1";
     }
-    [self.percentageField setText:[NSString stringWithFormat:@"%ld", (long)defaultPercentage]];
+    [self.percentageField setText:[NSString stringWithFormat:@"%@", defaultPercentage]];
     [self.numberOfPeopleField setText:billSplitNumberDefault];
 }
 

@@ -19,7 +19,7 @@
 @property (nonatomic, weak) IBOutlet UILabel * numberPeopleLabel;
 @property (nonatomic, weak) IBOutlet UICollectionView * tipCalculatedCollectionView;
 
-@property BOOL isDefaultLoaded;
+@property (nonatomic, strong) NSIndexPath * tipPercentageToScrollToIndexPath;
 
 @end
 
@@ -54,17 +54,22 @@
     
     // Make keyboard show
     [self.billTotalField becomeFirstResponder];
+    
+    self.tipPercentageToScrollToIndexPath = nil;
+    [self loadLatestData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.billTotalField becomeFirstResponder];
+    [self loadDefaultData];
+    [self clearLatestData];
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [self loadDefaultTip];
+    [self.tipCalculatedCollectionView scrollToItemAtIndexPath:self.tipPercentageToScrollToIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -172,53 +177,56 @@
     }
 }
 
-- (void) loadDefaultTip {
-    if (!self.isDefaultLoaded) {
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        
-        NSDate * lastDate = (NSDate *)[defaults objectForKey:kLastCloseDate];
-        NSTimeInterval timeDiff = [[NSDate date] timeIntervalSinceDate:lastDate];
-        
-        // Set up default tip percentage
-        NSIndexPath * tipPercentageToScrollToIndexPath = nil;
-
-        NSInteger lastTipPercentage = [defaults integerForKey:kLastTipPercentage];
-        NSString * lastBillTotal = [defaults objectForKey:kLastBillTotal];
-        NSString * lastBillSplitNumber = [defaults stringForKey:kLastBillSplitNumber];
-        
-        if (timeDiff < 600 && lastTipPercentage && lastBillTotal && lastBillSplitNumber) {
-            // If less than 10 minutes have passed and something has been recorded, set bill total, number of people to split by, and tip percentage to what was last present
-            tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:lastTipPercentage inSection:0];
-            [self.billTotalField setText:lastBillTotal];
-            [self.numberPeopleLabel setText:lastBillSplitNumber];
-        } else {
-            // If more than 10 minutes have passed, reset, and start with defaults
-            
-            // Clear last recorded numbers
-            [defaults removeObjectForKey:kLastBillTotal];
-            [defaults removeObjectForKey:kLastTipPercentage];
-            [defaults removeObjectForKey:kLastBillSplitNumber];
-            [defaults synchronize];
-            
-            // Load default percentage from settings
-            NSInteger tipPercentage = [defaults integerForKey:kTipPercentageDefault];
-            // Default is 15 if it hasn't already been set
-            if (tipPercentage == 0) {
-                tipPercentage = 15;
-            }
-            tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:tipPercentage inSection:0];
-            
-            // Load default number of people to split bill by
-            NSString * billSplitNumberDefault = [defaults stringForKey:kBillSplitNumberDefault];
-            if (!billSplitNumberDefault) {
-                billSplitNumberDefault = @"1";
-            }
-            [self.numberPeopleLabel setText:billSplitNumberDefault];
-        }
-        [self.tipCalculatedCollectionView scrollToItemAtIndexPath:tipPercentageToScrollToIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-        
-        self.isDefaultLoaded = YES;
+- (void) loadLatestData {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDate * lastDate = (NSDate *)[defaults objectForKey:kLastCloseDate];
+    NSTimeInterval timeDiff = [[NSDate date] timeIntervalSinceDate:lastDate];
+    
+    NSInteger lastTipPercentage = [defaults integerForKey:kLastTipPercentage];
+    NSString * lastBillTotal = [defaults objectForKey:kLastBillTotal];
+    NSString * lastBillSplitNumber = [defaults stringForKey:kLastBillSplitNumber];
+    
+    // If less than 10 minutes have passed and something has been recorded, set bill total, number of people to split by, and tip percentage to what was last present
+    if (timeDiff < 600 && lastTipPercentage && lastBillTotal && lastBillSplitNumber) {
+        self.tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:lastTipPercentage inSection:0];
+        [self.billTotalField setText:lastBillTotal];
+        [self.numberPeopleLabel setText:lastBillSplitNumber];
     }
+}
+
+- (void) loadDefaultData {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger lastTipPercentage = [defaults integerForKey:kLastTipPercentage];
+    NSString * lastBillTotal = [defaults objectForKey:kLastBillTotal];
+    NSString * lastBillSplitNumber = [defaults stringForKey:kLastBillSplitNumber];
+    
+    if (!lastTipPercentage && !lastBillTotal && !lastBillSplitNumber) {
+        // Load default percentage from settings
+        NSNumber * tipPercentage = [defaults objectForKey:kTipPercentageDefault];
+        // Default is 15 if it hasn't already been set
+        if (!tipPercentage) {
+            tipPercentage = @15;
+        }
+        self.tipPercentageToScrollToIndexPath = [NSIndexPath indexPathForRow:[tipPercentage integerValue] inSection:0];
+        
+        // Load default number of people to split bill by
+        NSString * billSplitNumberDefault = [defaults stringForKey:kBillSplitNumberDefault];
+        if (!billSplitNumberDefault) {
+            billSplitNumberDefault = @"1";
+        }
+        [self.numberPeopleLabel setText:billSplitNumberDefault];
+    }
+}
+
+- (void) clearLatestData {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    // Clear last recorded numbers
+    [defaults removeObjectForKey:kLastBillTotal];
+    [defaults removeObjectForKey:kLastTipPercentage];
+    [defaults removeObjectForKey:kLastBillSplitNumber];
+    [defaults synchronize];
 }
 
 @end
