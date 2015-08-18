@@ -36,6 +36,7 @@ static NSString * const reuseIdentifier = @"tipCell";
 }
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     
 }
 
